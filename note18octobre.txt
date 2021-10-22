@@ -1,5 +1,0 @@
-view par année
-views par jour de la semaine
-commentaire par categories (jour férié, confinement, saison)
-
-
