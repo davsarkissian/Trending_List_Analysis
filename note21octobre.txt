@@ -1,0 +1,13 @@
+nombre de video poster en fct du jour de la semaine 
+nombre de vue par jour de la semaine (fait)
+nombre de like par jour de la semaine 
+nombre de com par categorie
+
+Elodie :
+
+plot tracé : vues par jour de la semaine 
+vue par categorie et jour de la semaine 
+like par categorie et jour de la semaine 
+dislike ...
+commentaire ...
+
