@@ -30,6 +30,7 @@ def get_all_comments_from_video(video_id):
             comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
             date = item['snippet']['topLevelComment']['snippet']['publishedAt']
             likes = item['snippet']['topLevelComment']['snippet']['likeCount'] 
+            author = item['snippet']['topLevelComment']['snippet']['authorDisplayName']
             vid = yt_data.loc[yt_data.video_id == video_id]
             trending_entry = vid['trending_date_only'][1]
             if get_only_date(date) < trending_entry:
