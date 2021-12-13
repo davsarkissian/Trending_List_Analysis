@@ -14,7 +14,7 @@ def oneDay(date):
     return date[0]
 
 def listOfCategory():
-    with open('FR_category_id.json') as json_data:
+    with open('/Users/elodieedouard/Desktop/Projet_5eme/FR_category_id.json') as json_data:
         data_dict = json.load(json_data)
     listCategory = list()
     for i in range(len(data_dict["items"])):
