@@ -20,6 +20,7 @@ def get_only_date(date):
 
 
 def get_all_comments_from_video(video_id):
+    """
     try:
         com_list=[]
         
@@ -42,24 +43,33 @@ def get_all_comments_from_video(video_id):
                 com_list.append(keyList)
     except:
         com_list = []
+    """
+    try: 
+        
+        commentThread_json = api.get_comment_threads(video_id=video_id,count=None)
+        com_list = commentThread_json.to_dict()
+    except:
+        com_list = {}
+
+
     return com_list
 
 
 def process1(df_1):
     df_1['com_list'] = df_1['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_1.to_csv('df_first_part.csv',encoding = 'UTF-8',index=False)
+    df_1.to_csv('df_first_part.csv')
     
 def process2(df_2):
     df_2['com_list'] = df_2['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_2.to_csv('df_second_part.csv',encoding = 'UTF-8',index=False)
+    df_2.to_csv('df_second_part.csv')
 
 def process3(df_3):
     df_3['com_list'] = df_3['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_3.to_csv(index=False)
+    df_3.to_csv('df_third_part.csv')
 
 def process4(df_4):
     df_4['com_list'] = df_4['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_4.to_csv(index=False)
+    df_4.to_csv('df_forth_part.csv')
 
 
 
@@ -68,34 +78,35 @@ if __name__ == '__main__':
     yt_data['trending_date_only'] = yt_data['trending_date'].apply(lambda x : get_only_date(x))
     yt_data.drop_duplicates(subset ="video_id", keep = 'first', inplace=True)
 
-    df_1,df_2,df_3,df_4 = np.array_split(yt_data,4)
+    df_1,df_2,df_3,df_4,df_5,df_6,df_7,df_8 = np.array_split(yt_data,8)
 
 
 
-    api = Api(api_key="AIzaSyB1yzx6LfVXAfCEcpT8IexkHKIt1s7mfRg")
+    api = Api(api_key="AIzaSyAW2z0U9ThLuPIFMOvaPW599sT4_iI3Bhc")
     print('debut de process')
     """
     video_id = 'AcBd_RH9JSw'
     vid_no_com = 'SExxIJcLk-Y'
-    res = get_all_comments_from_video(video_id,df_1)
+    res = get_all_comments_from_video(video_id)
+
     print(res)
     print(len(res))
     """
     th1 = threading.Thread(target=process1(df_1))
     th2 = threading.Thread(target=process2(df_2))
-    #th3 = threading.Thread(target=process3(df_3))
-    #th4 = threading.Thread(target=process4(df_4))
+    th3 = threading.Thread(target=process3(df_3))
+    th4 = threading.Thread(target=process4(df_4))
 
 
     th1.start()
     th2.start()
-    #th3.start()
-    #th4.start()
+    th3.start()
+    th4.start()
 
     th1.join()
     th2.join()
-    #th3.join()
-    #th4.join()
+    th3.join()
+    th4.join()
 
     
     
