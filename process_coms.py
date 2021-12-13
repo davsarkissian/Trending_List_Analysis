@@ -47,11 +47,11 @@ def get_all_comments_from_video(video_id):
 
 def process1(df_1):
     df_1['com_list'] = df_1['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_1.to_csv(index=False)
+    df_1.to_csv('df_first_part.csv',encoding = 'UTF-8',index=False)
     
 def process2(df_2):
     df_2['com_list'] = df_2['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_2.to_csv(index=False)
+    df_2.to_csv('df_second_part.csv',encoding = 'UTF-8',index=False)
 
 def process3(df_3):
     df_3['com_list'] = df_3['video_id'].apply(lambda x: get_all_comments_from_video(x))
@@ -83,19 +83,19 @@ if __name__ == '__main__':
     """
     th1 = threading.Thread(target=process1(df_1))
     th2 = threading.Thread(target=process2(df_2))
-    th3 = threading.Thread(target=process3(df_3))
-    th4 = threading.Thread(target=process4(df_4))
+    #th3 = threading.Thread(target=process3(df_3))
+    #th4 = threading.Thread(target=process4(df_4))
 
 
     th1.start()
     th2.start()
-    th3.start()
-    th4.start()
+    #th3.start()
+    #th4.start()
 
     th1.join()
     th2.join()
-    th3.join()
-    th4.join()
+    #th3.join()
+    #th4.join()
 
     
     
