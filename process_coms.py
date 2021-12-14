@@ -39,6 +39,7 @@ def get_all_comments_from_video(video_id):
                     "comment":comment,
                     "date":date,
                     "likes":likes
+
                 }
                 com_list.append(keyList)
     except:
@@ -79,7 +80,14 @@ if __name__ == '__main__':
     yt_data.drop_duplicates(subset ="video_id", keep = 'first', inplace=True)
 
     df_1,df_2,df_3,df_4,df_5,df_6,df_7,df_8 = np.array_split(yt_data,8)
+#mettre chaque fichier dans un csv
 
+#enregistrer les com thread dans des json localement (nom du json = id video) et esuite integrer au csv
+
+    print(len(df_1))
+    print(len(df_2))
+    print(len(df_3))
+    print(len(df_4))
 
 
     api = Api(api_key="AIzaSyAW2z0U9ThLuPIFMOvaPW599sT4_iI3Bhc")
@@ -91,7 +99,7 @@ if __name__ == '__main__':
 
     print(res)
     print(len(res))
-    """
+    
     th1 = threading.Thread(target=process1(df_1))
     th2 = threading.Thread(target=process2(df_2))
     th3 = threading.Thread(target=process3(df_3))
@@ -110,6 +118,6 @@ if __name__ == '__main__':
 
     
     
-    
+    """
     
     print('done')
