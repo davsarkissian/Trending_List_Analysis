@@ -4,6 +4,7 @@ from datetime import date
 from pyyoutube import Api
 import numpy as np
 import threading
+import json
 
 
 data_path = "Data/FR_youtube_trending_data_copie.csv"
@@ -20,7 +21,7 @@ def get_only_date(date):
 
 
 def get_all_comments_from_video(video_id):
-    """
+    
     try:
         com_list=[]
         
@@ -52,8 +53,26 @@ def get_all_comments_from_video(video_id):
     except:
         com_list = {}
 
-
+    """
     return com_list
+
+def comsToJsonFile(video_id):
+
+    try: 
+        
+        commentThread_json = api.get_comment_threads(video_id=video_id,count=1500)
+
+        com_list = commentThread_json.to_dict()
+
+        json_file = open("./Data/comByVideo/%s.json" % video_id, "w",encoding='utf-8')
+        json.dump(com_list, json_file,ensure_ascii=False)
+        json_file.close()
+
+    except:
+        com_list = {}
+        json_file = open("./Data/comByVideo/%s.json" % video_id, "w",encoding='utf-8')
+        json.dump(com_list, json_file ,ensure_ascii=False)
+        json_file.close()
 
 
 def process1(df_1):
@@ -65,12 +84,10 @@ def process2(df_2):
     df_2.to_csv('df_second_part.csv')
 
 def process3(df_3):
-    df_3['com_list'] = df_3['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_3.to_csv('df_third_part.csv')
+    df_3['video_id'].apply(lambda x: comsToJsonFile(x))
 
 def process4(df_4):
-    df_4['com_list'] = df_4['video_id'].apply(lambda x: get_all_comments_from_video(x))
-    df_4.to_csv('df_forth_part.csv')
+    df_4['video_id'].apply(lambda x: comsToJsonFile(x))
 
 
 
@@ -84,40 +101,36 @@ if __name__ == '__main__':
 
 #enregistrer les com thread dans des json localement (nom du json = id video) et esuite integrer au csv
 
-    print(len(df_1))
-    print(len(df_2))
-    print(len(df_3))
-    print(len(df_4))
+    
 
 
     api = Api(api_key="AIzaSyAW2z0U9ThLuPIFMOvaPW599sT4_iI3Bhc")
     print('debut de process')
-    """
-    video_id = 'AcBd_RH9JSw'
-    vid_no_com = 'SExxIJcLk-Y'
-    res = get_all_comments_from_video(video_id)
-
-    print(res)
-    print(len(res))
     
-    th1 = threading.Thread(target=process1(df_1))
-    th2 = threading.Thread(target=process2(df_2))
+    video_id = 'JVm8P6kKgD0'
+    vid_no_com = 'SExxIJcLk-Y'
+
+    comsToJsonFile(video_id)
+    
+    """
+    #th1 = threading.Thread(target=process1(df_1))
+    #th2 = threading.Thread(target=process2(df_2))
     th3 = threading.Thread(target=process3(df_3))
     th4 = threading.Thread(target=process4(df_4))
 
 
-    th1.start()
-    th2.start()
+    #th1.start()
+    #th2.start()
     th3.start()
     th4.start()
 
-    th1.join()
-    th2.join()
+    #th1.join()
+    #th2.join()
     th3.join()
     th4.join()
 
     
-    
     """
+    
     
     print('done')
