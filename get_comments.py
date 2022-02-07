@@ -8,11 +8,7 @@ from datetime import date
 
 data_path = "Data/FR_youtube_trending_data_copie.csv"
 yt_data = pd.read_csv(data_path)
-
-
 api_key="AIzaSyCfoWStv5meUynmjpqNjwDUBMH9NTY7FSY"
-video_id = 'JVm8P6kKgD0'
-#video_id="P3IkBxra3a8"
 youtube = build('youtube','v3',developerKey=api_key)
 
 def get_only_date(date):
@@ -39,8 +35,7 @@ def get_comment_threads(youtube,**kwargs):
                 result = youtube.commentThreads().list(**kwargs).execute()
                 pages_com.append(result)
                 
-                if len(token_list) == 14
-                :
+                if len(token_list) == 14:
                     break
                     
             else:
@@ -65,7 +60,7 @@ if __name__ == '__main__':
     #video_id="P3IkBxra3a8"
 
 
-    #get_comment_threads(youtube,part='snippet',videoId=video_id,maxResults=100,order="time")
+    get_comment_threads(youtube,part='snippet',videoId=video_id,maxResults=100,order="time")
 
     yt_data.drop_duplicates(subset ="video_id", keep = 'first', inplace=True)
     yt_data['trending_date_only'] = yt_data['trending_date'].apply(lambda x : get_only_date(x))
