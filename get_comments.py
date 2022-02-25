@@ -70,16 +70,16 @@ def process3(df,apiKey):
 
 if __name__ == '__main__':
 
-    apiKeyList = ['AIzaSyCfoWStv5meUynmjpqNjwDUBMH9NTY7FSY',
-    'AIzaSyAW2z0U9ThLuPIFMOvaPW599sT4_iI3Bhc',
+    apiKeyList = ['AIzaSyDW78aG0DC2H3le_7CzvoqqlCP-jJt0Iu4',
+    'AIzaSyCaYAqTqXjF8rWczE6a8tt2LDlX5BEcq1U',
     'AIzaSyBdA2vjCTTDgKqd6g4-yiFz0rYkPn-nt0Q',
     'AIzaSyA7lnlOS2BRknpfPhm7pez5N7vHyQRFmuI',
     'AIzaSyB1yzx6LfVXAfCEcpT8IexkHKIt1s7mfRg',
     'AIzaSyDtKh18qPOAQSrhJRHX5H3dH9_C1PAVBDY',
     'AIzaSyC91f5S1U0zxL1JhyxwlU-J-uLnz7cUono',
     'AIzaSyCgKuOL808Jm1XCIL9aV5KUtRLnPWs95oo',
-    'AIzaSyDQzm5SA20wgYZlTuMYfDwQmgPeqai4vsI',
-    'AIzaSyCHTNerORYz0ObrOu4LfmZEOKYPRJ0YDy8',
+    'AIzaSyAAe-OUKYwqh4bu9hubkbsDefrFxOJ60_g',
+    'AIzaSyBmYIetTS0iMUPInoQBmeLMQChh2hYTIS8',
     ]
 
     #youtube = build('youtube','v3',developerKey=apiKeyList[6])
@@ -100,17 +100,17 @@ if __name__ == '__main__':
     
     #df_7['video_id'].apply(lambda x : get_comment_threads(youtube,part='snippet',videoId=x,maxResults=100,order="time"))
 
-    th1 = threading.Thread(target=process1(df_8,apiKeyList[7]))
-    th2 = threading.Thread(target=process2(df_9,apiKeyList[8]))
-    th3 = threading.Thread(target=process3(df_10,apiKeyList[9]))
+    th1 = threading.Thread(target=process1(df_29,apiKeyList[0]))
+    th2 = threading.Thread(target=process2(df_30,apiKeyList[1]))
+    #th3 = threading.Thread(target=process3(df_28,apiKeyList[8]))
 
     th1.start()
     th2.start()
-    th3.start()
+    #th3.start()
 
     th1.join()
     th2.join()
-    th3.join()
+    #th3.join()
 
 # sur chaque projet je peux traiter 600 video par jour
 #sur 10 projet on peut faire une recup sur 6000 videos sur 20 projet 12000 videos
