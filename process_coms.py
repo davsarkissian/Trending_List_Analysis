@@ -5,13 +5,29 @@ from pyyoutube import Api
 import numpy as np
 import threading
 import json
-
+import os 
 
 data_path = "Data/FR_youtube_trending_data_copie.csv"
 yt_data = pd.read_csv(data_path)
 
 
 
+def iterateOverFiles():
+    directory = 'Data/comByVideo/'
+ 
+# iterate over files in
+# that directory
+    for filename in os.listdir(directory):
+        f = os.path.join(directory, filename)
+        # checking if it is a file
+        if os.path.isfile(f):
+            print(filename)
+
+def importJsonFile():
+    
+    with open('Data/comByVideo/__VnP2s-Hnc.json') as f:
+        d = json.load(f)
+    return d
 
 
 def get_only_date(date):
@@ -92,7 +108,7 @@ def process4(df_4):
 
 
 if __name__ == '__main__':
-    
+    '''
     yt_data['trending_date_only'] = yt_data['trending_date'].apply(lambda x : get_only_date(x))
     yt_data.drop_duplicates(subset ="video_id", keep = 'first', inplace=True)
 
@@ -101,36 +117,6 @@ if __name__ == '__main__':
 
 #enregistrer les com thread dans des json localement (nom du json = id video) et esuite integrer au csv
 
+    '''    
+    iterateOverFiles()
     
-
-
-    api = Api(api_key="AIzaSyAW2z0U9ThLuPIFMOvaPW599sT4_iI3Bhc")
-    print('debut de process')
-    
-    video_id = 'JVm8P6kKgD0'
-    vid_no_com = 'SExxIJcLk-Y'
-
-    comsToJsonFile(video_id)
-    
-    """
-    #th1 = threading.Thread(target=process1(df_1))
-    #th2 = threading.Thread(target=process2(df_2))
-    th3 = threading.Thread(target=process3(df_3))
-    th4 = threading.Thread(target=process4(df_4))
-
-
-    #th1.start()
-    #th2.start()
-    th3.start()
-    th4.start()
-
-    #th1.join()
-    #th2.join()
-    th3.join()
-    th4.join()
-
-    
-    """
-    
-    
-    print('done')
