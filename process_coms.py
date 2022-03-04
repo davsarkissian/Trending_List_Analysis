@@ -8,7 +8,7 @@ import json
 import os 
 
 
-
+counter =0
 
 
 def iterateOverFiles():
@@ -28,10 +28,14 @@ def get_only_date(date):
     print(str(date_time_obj))
     return str(date_time_obj)
 
-def importJsonFile():
+def importJsonFile(video_id):
+    global counter
+    print(video_id)
+    
     try:
+        counter +=1
         com_list =[]
-        with open('Data/comByVideo/__VnP2s-Hnc.json') as f:
+        with open('Data/comByVideo/{}.json'.format(video_id)) as f:
             dict_list = json.load(f)
             for js in dict_list:
                 for item in js['items']:
@@ -39,7 +43,7 @@ def importJsonFile():
                     date = item['snippet']['topLevelComment']['snippet']['publishedAt']
                     likes = item['snippet']['topLevelComment']['snippet']['likeCount'] 
                     author = item['snippet']['topLevelComment']['snippet']['authorDisplayName']
-                    vid = yt_data.loc[yt_data.video_id == '__VnP2s-Hnc']
+                    vid = yt_data.loc[yt_data.video_id == video_id]
                     """ trending_entry = vid['trending_date_only'].item()[:10]
                     if get_only_date(date) < trending_entry:
                         print('ok') """
@@ -51,10 +55,11 @@ def importJsonFile():
 
                     }
                     com_list.append(keyList)
-
+        print('1')
     except:
         com_list = []
-
+        print('2')
+    print(counter)
     return com_list
 
     
@@ -147,14 +152,20 @@ if __name__ == '__main__':
 
 #enregistrer les com thread dans des json localement (nom du json = id video) et esuite integrer au csv
 
-    '''   
+    '''  
+    
     data_path = "Data/FR_youtube_trending_data_copie.csv"
     yt_data = pd.read_csv(data_path)
 
     yt_data['trending_date_only'] = yt_data['trending_date'].apply(lambda x : get_only_date(x))
     yt_data.drop_duplicates(subset ="video_id", keep = 'first', inplace=True)
 
-    res = importJsonFile()
-    print(res)
+    """ idvid = 'ZzMAYUdKTP0'
+    res = importJsonFile(idvid)
+    print(res) """
+    
+    yt_data["comment_list"] = yt_data["video_id"].apply(lambda x : importJsonFile(x))
+
+    df.to_csv('Data/full-yt-data.csv')
 
     
